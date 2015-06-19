@@ -1,0 +1,123 @@
+#!/bin/bash
+
+BACKUP_DIR="$HOME/backup"
+DOTFILE_BACKUPS="$BACKUP_DIR/dotfiles"
+
+# Utilities
+function datetime() {
+    date +%Y-%m-%d_%H:%M:%S
+}
+
+function ls_functions()
+{
+  functions | grep -P "^\w* \(\) \{" | grep -v ^_ | cut -d ' ' -f 1
+}
+
+function wgets()
+{
+  local H='--header'
+  wget $H='Accept-Language: en-us,en;q=0.5' $H='Accept: text/html,application/xhtml+xml,application/xml;q=0.9,*/*;q=0.8' $H='Connection: keep-alive' -U       'Mozilla/5.0 (Windows NT 5.1; rv:10.0.2) Gecko/20100101 Firefox/10.0.2' --referer=http://www.askapache.com/ "$@";
+}
+
+# SSH
+
+function sshn() {
+    [ -z $1 ] && { 
+        echo "Please provide a session name, aborting."
+        return
+    }
+
+    local session=$1
+    local window=$1
+    local command="ssh"
+
+    for host in $(cat -); do
+        if [ $rown ]; then
+            tmux split-window -h "$command $host"
+            tmux select-layout tiled > /dev/null 
+        fi
+        if [ -z $rown ]; then
+            local rown="yes"
+            tmux new-session -d -n $window -s $session "$command $host"
+        fi
+    done
+    tmux select-pane -t 0
+    tmux set-window-option synchronize-panes on > /dev/null
+}
+
+# Dotfiles
+
+function dotfiles_localize() {
+  for x in $(cat -)
+  do
+    echo "Moving .$x to .$x.local"
+    mv $HOME/$x $HOME/$x.local 
+  done
+}
+
+function dotfiles_unlocalize() {
+  for x in $(cat -)
+  do
+    echo "Moving .$x.local to .$x"
+    mv $HOME/$x.local $HOME/$x
+  done
+}
+
+function dotfiles_backup() {
+  for x in $(cat -)
+  do
+    local d=$DOTFILE_BACKUPS/`datetime` 
+    mkdir -p $d
+    echo "Copying $x to $d/dot$x.backup"
+    cp $HOME/$x $d/dot$x.backup 
+  done
+}
+
+# Git
+
+git-recursive () {
+  find -follow -name .git -type d -print -execdir git "$@" \;
+}
+
+# Brazil
+
+function cd_pkg()
+{
+  cd `ls -d /workplace/$USER/*/src/* | grep -i $@`
+}
+
+function pkgs()
+{
+  ls -d /workplace/$USER/*/src/* | grep -i $@
+}
+
+
+function sanegrep()
+{
+  _pattern=$1
+  grep -iEr --exclude *.js --exclude *.css --exclude *spec* --exclude tags $1 .
+}
+
+function virb()
+{
+  case `uname` in
+    Darwin)
+      vim `find -E . -iregex ".*/$1\.rb"`
+      ;;
+    Linux)
+      vim `find -regex ".*/$1\.rb$"`
+      ;;
+  esac
+}
+
+function vimo()
+{
+  case `uname` in
+    Darwin)
+      vim `find -E . -iname $1`
+      ;;
+    Linux)
+      vim `find -iname $1`
+      ;;
+  esac
+}

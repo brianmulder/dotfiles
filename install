@@ -1,0 +1,12 @@
+#!/bin/bash
+ln -s `pwd`/gitconfig.local /home/bmulder/.gitconfig.local
+ln -s `pwd`/gitignore /home/bmulder/.gitignore
+ln -s `pwd`/tmux.conf /home/bmulder/.tmux.conf
+ln -s `pwd`/vimrc.local /home/bmulder/.vimrc.local
+ln -s `pwd`/zshenv /home/bmulder/.zshenv
+ln -s `pwd`/zshrc /home/bmulder/.zshrc
+ln -s `pwd`/ssh-agent-start /home/bmulder/.ssh-agent-start
+
+# Needs to be secure? 
+cp ssh_config ~/.ssh/config
+chmod 600 ~/.ssh/config
