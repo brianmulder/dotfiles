@@ -1,0 +1,13 @@
+# Automations
+alias work='tmux at -t x'
+# todo: alias cdp=cd_pkg
+alias Pgrep=grep -P
+
+# Cool
+alias utc='date -u +"%Y-%m-%dT%H:%M:%SZ"'
+alias rserve='ruby -run -e httpd . -p 9090'
+alias pserve='python -m SimpleHTTPServer 9090'
+
+# Old windows habbit
+alias clr="clear;ls"
+
