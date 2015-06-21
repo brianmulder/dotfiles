@@ -6,5 +6,20 @@ bind c new-window -c "#{pane_current_path}"
 bind | split-window -h -c "#{pane_current_path}"
 bind % split-window -v -c "#{pane_current_path}"
 
+bind h select-pane -L          
+bind j select-pane -D          
+bind k select-pane -U          
+bind l select-pane -R
+
+# ^A l --- lock
+bind-key L setw synchronize-panes on
+# ^A u -- unlock
+bind-key U setw synchronize-panes off
+
+set -g history-limit 1000000
+
+## status bar
+setw -g automatic-rename off
+
 run-shell "powerline-daemon -q"
 source "/usr/local/lib/python2.7/site-packages/powerline/bindings/tmux/powerline.conf"
