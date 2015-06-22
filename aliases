@@ -1,7 +1,6 @@
 # Automations
 alias work='tmux at -t x'
-# todo: alias cdp=cd_pkg
-alias Pgrep=grep -P
+alias cdr=cd_repo
 
 # Cool
 alias utc='date -u +"%Y-%m-%dT%H:%M:%SZ"'
