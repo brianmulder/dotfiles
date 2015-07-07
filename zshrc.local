@@ -8,6 +8,10 @@
 export LC_ALL=en_US.UTF-8
 export LANG=en_US.UTF-8
 
+# Gradle
+export GRADLE_HOME=/opt/gradle/gradle-2.4
+export PATH="$GRADLE_HOME/bin:$PATH"
+
 # Powerlines - powerline.readthedocs.org
 . /usr/local/lib/python2.7/site-packages/powerline/bindings/zsh/powerline.zsh
 
