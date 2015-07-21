@@ -10,3 +10,7 @@ alias pserve='python -m SimpleHTTPServer 9090'
 # Old windows habbit
 alias clr="clear;ls"
 
+# Boot2Docker
+alias b2d=boot2docker
+alias b2d-envs='eval "$(boot2docker shellinit)"'
+alias b2d-x509="boot2docker ssh 'sudo /etc/init.d/docker restart'"
