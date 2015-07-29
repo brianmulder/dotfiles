@@ -32,3 +32,10 @@ python del powerline_setup
 " unzip and move stuff to plugin, doc and autoload folders
 map Fb :FufBuffer
 map Ff :FufFile
+
+" ctrlp.vim
+" kien.github.io/ctrlp.vim
+" cd ~/.vim
+" git clone https://github.com/kien/ctrlp.vim.git bundle/ctrlp.vim
+set runtimepath^=~/.vim/bundle/ctrlp.vim
+
