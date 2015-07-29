@@ -21,3 +21,14 @@ python from powerline.vim import setup as powerline_setup
 python powerline_setup()
 python del powerline_setup
 
+" *** Manual ***
+
+" FuzzyFinder (vimscript)
+" Repository - https://bitbucket.org/ns9tks/vim-fuzzyfinder
+" Install
+" wget https://bitbucket.org/ns9tks/vim-l9/get/tip.zip
+" wget https://bitbucket.org/ns9tks/vim-fuzzyfinder/get/tip.zip
+" cd ~/.vim
+" unzip and move stuff to plugin, doc and autoload folders
+map Fb :FufBuffer
+map Ff :FufFile
