@@ -1,6 +1,7 @@
 # Automations
 alias work='tmux at -t x'
 alias cdr=cd_repo
+alias cdw='cd $HOME/Dropbox/Jumo/+Kanban/+Backlog/+Next'
 
 # Cool
 alias utc='date -u +"%Y-%m-%dT%H:%M:%SZ"'
