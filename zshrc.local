@@ -1,8 +1,10 @@
+export PERSONAL_REPO=$HOME/GitHub/F0rtyTw0
+
 # Functions
-. $HOME/GitHub/scripts/functions
+. $PERSONAL_REPO/scripts/functions
 
 # Aliases
-. $HOME/GitHub/dotfiles/aliases
+. $PERSONAL_REPO/dotfiles/aliases
 
 # Solves - ValueError: unknown locale: UTF-8 in Python
 export LC_ALL=en_US.UTF-8
