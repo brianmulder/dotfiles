@@ -12,6 +12,8 @@ set softtabstop=2
 set spell spelllang=en_us
 set nospell
 
+:let ruby_fold=1
+
 autocmd vimenter * NERDTree
 let NERDTreeShowHidden=1
 
