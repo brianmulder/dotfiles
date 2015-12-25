@@ -6,6 +6,15 @@ export PERSONAL_REPO=$HOME/GitHub/F0rtyTw0
 # Aliases
 . $PERSONAL_REPO/dotfiles/aliases
 
+# ghc-mod
+# https://github.com/DanielG/cabal-helper/issues/7
+# "
+# Couldn't find executable cabal-helper-wrapper in directory:
+# /Users/BrianMu/.stack/global/.stack-work/install/x86_64-osx/lts-3.19/7.10.2/bin/
+# "
+# Found it at: /Users/BrianMu/.cabal/libexec/cabal-helper-wrapper
+export PATH=$HOME/.local/bin:$PATH
+
 # Solves - ValueError: unknown locale: UTF-8 in Python
 export LC_ALL=en_US.UTF-8
 export LANG=en_US.UTF-8
@@ -16,6 +25,9 @@ export PATH="$GRADLE_HOME/bin:$PATH"
 
 # Powerlines - powerline.readthedocs.org
 . /usr/local/lib/python2.7/site-packages/powerline/bindings/zsh/powerline.zsh
+
+# Stack
+# NOT WORKING: eval "$(stack --bash-completion-script stack)"
 
 # rbenv - https://github.com/sstephenson/rbenv
 if which rbenv > /dev/null; then eval "$(rbenv init -)"; fi
