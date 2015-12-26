@@ -21,6 +21,9 @@ autocmd FileType ruby set sw=2 sts=2 et
 set noswapfile
 set dir=~/tmp
 
+" Cscope
+" cs add $CSCOPE_DB
+
 " *** Manual ***
 
 " FuzzyFinder (vimscript)
