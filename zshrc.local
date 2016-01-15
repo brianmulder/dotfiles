@@ -23,11 +23,20 @@ export LANG=en_US.UTF-8
 export GRADLE_HOME=/opt/gradle/gradle-2.4
 export PATH="$GRADLE_HOME/bin:$PATH"
 
+# Heroku
+export PATH="/usr/local/heroku/bin:$PATH"
+
+# RVM
+export PATH="$PATH:$HOME/.rvm/bin"
+
 # Powerlines - powerline.readthedocs.org
 . /usr/local/lib/python2.7/site-packages/powerline/bindings/zsh/powerline.zsh
 
 # Stack
 # NOT WORKING: eval "$(stack --bash-completion-script stack)"
+
+# thefuck
+eval "$(thefuck --alias)"
 
 # rbenv - https://github.com/sstephenson/rbenv
 if which rbenv > /dev/null; then eval "$(rbenv init -)"; fi
