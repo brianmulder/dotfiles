@@ -5,6 +5,10 @@ syntax on
 filetype plugin indent on
 set mouse=a
 
+" https://evertpot.com/osx-tmux-vim-copy-paste-clipboard/
+" I have not/did not need to do the things for tmux to 'just work'
+set clipboard=unnamed
+
 set smartcase
 set expandtab
 set shiftwidth=2
