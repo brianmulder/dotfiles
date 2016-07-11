@@ -10,9 +10,9 @@ export PERSONAL_REPO=$HOME/GitHub/F0rtyTw0
 # https://github.com/DanielG/cabal-helper/issues/7
 # "
 # Couldn't find executable cabal-helper-wrapper in directory:
-# /Users/BrianMu/.stack/global/.stack-work/install/x86_64-osx/lts-3.19/7.10.2/bin/
+# /Users/brian.mulder/.stack/global/.stack-work/install/x86_64-osx/lts-3.19/7.10.2/bin/
 # "
-# Found it at: /Users/BrianMu/.cabal/libexec/cabal-helper-wrapper
+# Found it at: /Users/brian.mulder/.cabal/libexec/cabal-helper-wrapper
 export PATH=$HOME/.local/bin:$PATH
 
 # Solves - ValueError: unknown locale: UTF-8 in Python
@@ -48,7 +48,7 @@ export PATH=$PATH:$HOME/bin
 eval "$(thefuck --alias)"
 
 # DCOS
-source /Users/BrianMu/GitHub/dcos/dcos-vagrant/bin/env-setup
+source /Users/brian.mulder/GitHub/dcos/dcos-vagrant/bin/env-setup
 
 # rbenv - https://github.com/sstephenson/rbenv
 # if which rbenv > /dev/null; then eval "$(rbenv init -)"; fi
