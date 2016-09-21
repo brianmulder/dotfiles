@@ -4,7 +4,7 @@
   required = true
 [user]
   name = Brian Mulder
-  email = bfmulder@gmail.com
+  email = bfmulder+github@gmail.com
 [push]
   default = simple
 [diff]
@@ -25,3 +25,4 @@
   slg = git shortlog -s --log --graph --format='format:%C(yellow)%h%C(reset) %C(blue)\"%an\" <%ae>%C(reset) %C(magenta)%cr%C(reset)%C(auto)%d%C(reset)%n%s' --date-order
 [core]
   excludesfile = ~/.gitignore
+  editor = /usr/local/bin/vim

@@ -1,7 +1,9 @@
 " https://github.com/tpope/vim-pathogen
 execute pathogen#infect('pathogens/{}')
 
-syntax on
+syntax enable
+set background=dark
+colorscheme solarized
 filetype plugin indent on
 set mouse=a
 
@@ -45,4 +47,8 @@ map Ff :FufFile
 " cd ~/.vim
 " git clone https://github.com/kien/ctrlp.vim.git bundle/ctrlp.vim
 set runtimepath^=~/.vim/bundle/ctrlp.vim
+
+python from powerline.vim import setup as powerline_setup
+python powerline_setup()
+python del powerline_setup
 
