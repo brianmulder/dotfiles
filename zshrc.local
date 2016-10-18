@@ -1,4 +1,4 @@
-export PERSONAL_REPO=$HOME/github/brianmulder
+export PERSONAL_REPO=$HOME/github.com/brianmulder
 
 # Functions
 . $PERSONAL_REPO/scripts/functions
@@ -33,6 +33,9 @@ export PATH="$PATH:$HOME/.rvm/bin"
 # Conscript - ?... http://scalatra.org/getting-started/installation.html
 export PATH="$PATH:$HOME/.conscript/bin"
 
+export SCALA_HOME=/usr/local/share/scala
+export PATH=$PATH:$SCALA_HOME/bin
+
 SPARK_HOME="/opt/spark/spark-1.6.1-bin-hadoop2.6"
 export PATH="$PATH:$SPARK_HOME/bin"
 
@@ -53,3 +56,24 @@ eval "$(thefuck --alias)"
 
 # rbenv - https://github.com/sstephenson/rbenv
 # if which rbenv > /dev/null; then eval "$(rbenv init -)"; fi
+
+# ZBI
+export GETTING_STARTED=~/code.br.zbi.cba/ZBI/getting-started
+. $GETTING_STARTED/p-proxy.functions
+
+SSH_AUTH_SOCK=~/.agent_ssh_auth_sock
+
+# Call this if the above has been blown away
+ssh-reagent () {
+  for agent in /var/folders/zt/**/T/ssh-*/*; do
+      export SSH_AUTH_SOCK=$agent
+      if ssh-add -l 2>&1 > /dev/null; then
+         echo Found working SSH Agent:
+         # Persist the socket for conveniance
+         ln -fs $SSH_AUTH_SOCK $HOME/.agent_ssh_auth_sock
+         ssh-add -l
+         return
+      fi
+  done
+  echo Cannot find ssh agent - maybe you should reconnect and forward it?
+}

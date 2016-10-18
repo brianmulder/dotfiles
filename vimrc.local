@@ -1,6 +1,7 @@
 " https://github.com/tpope/vim-pathogen
 execute pathogen#infect('pathogens/{}')
 
+set nocompatible
 syntax enable
 set background=dark
 colorscheme solarized
@@ -17,8 +18,10 @@ set shiftwidth=2
 set softtabstop=2
 
 :let ruby_fold=1
+:let mapleader=','
 
-autocmd vimenter * NERDTree
+" Doesn't play so nice with vimwiki
+" autocmd vimenter * NERDTree
 let NERDTreeShowHidden=1
 map <C-n> :NERDTreeToggle<CR>
 autocmd bufenter * if (winnr("$") == 1 && exists("b:NERDTree") && b:NERDTree.isTabTree()) | q | endif
@@ -26,6 +29,15 @@ autocmd bufenter * if (winnr("$") == 1 && exists("b:NERDTree") && b:NERDTree.isT
 autocmd FileType ruby set sw=2 sts=2 et
 set noswapfile
 set dir=~/tmp
+
+" vimwiki stuff "
+" Run multiple wikis "
+let g:vimwiki_list = [
+                        \{'path': '~/Documents/Work/work.vimwiki'},
+                        \{'path': '~/Documents/Personal/personal.vimwiki'}
+                \]
+" Automatic syntax highlighting in vimwiki
+let automatic_nested_syntaxes=1
 
 " Cscope
 " cs add $CSCOPE_DB

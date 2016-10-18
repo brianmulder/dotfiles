@@ -1,17 +1,10 @@
 # Automations
-alias work='tmux at -t x'
 alias cdr=cd_repo
-alias cdw='cd $HOME/Dropbox/Jumo/+Kanban/+Backlog/+Next'
+alias cdw='cd $HOME/Documents/Work/work.vimwiki'
+alias cdp='cd $HOME/Documents/Personal/personal.vimwiki'
 
 # Cool
 alias utc='date -u +"%Y-%m-%dT%H:%M:%SZ"'
 alias rserve='ruby -run -e httpd . -p 9090'
 alias pserve='python -m SimpleHTTPServer 9090'
 
-# Old windows habbit
-alias clr="clear;ls"
-
-# Boot2Docker
-alias b2d=boot2docker
-alias b2d-envs='eval "$(boot2docker shellinit)"'
-alias b2d-x509="boot2docker ssh 'sudo /etc/init.d/docker restart'"

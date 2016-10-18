@@ -1,4 +1,4 @@
-# Use with `source-file /Users/brian/github/brianmulder/dotfiles/tmux.conf.local`
+# Use with `source-file /Users/brian/github.com/brianmulder/dotfiles/tmux.conf.local`
 
 unbind C-a
 set -g prefix C-b
@@ -12,9 +12,9 @@ bind c new-window -c "#{pane_current_path}"
 bind | split-window -h -c "#{pane_current_path}"
 bind % split-window -v -c "#{pane_current_path}"
 
-bind h select-pane -L          
-bind j select-pane -D          
-bind k select-pane -U          
+bind h select-pane -L
+bind j select-pane -D
+bind k select-pane -U
 bind l select-pane -R
 
 # ^A l --- lock
@@ -28,7 +28,8 @@ set -g history-limit 1000000
 setw -g automatic-rename off
 
 ## Coloring
-source "/Users/brian/github/altercation/solarized/tmux/tmuxcolors-dark.conf"
+source "/Users/brian/github.com/altercation/solarized/tmux/tmuxcolors-dark.conf"
 
 run-shell "powerline-daemon -q"
 source "/usr/local/lib/python2.7/site-packages/powerline/bindings/tmux/powerline.conf"
+
