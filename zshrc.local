@@ -1,18 +1,4 @@
-export PERSONAL_REPO=$HOME/github.com/brianmulder
 
-# Functions
-. $PERSONAL_REPO/scripts/functions
-
-# Aliases
-. $PERSONAL_REPO/dotfiles/aliases
-
-# ghc-mod
-# https://github.com/DanielG/cabal-helper/issues/7
-# "
-# Couldn't find executable cabal-helper-wrapper in directory:
-# /Users/brian.mulder/.stack/global/.stack-work/install/x86_64-osx/lts-3.19/7.10.2/bin/
-# "
-# Found it at: /Users/brian.mulder/.cabal/libexec/cabal-helper-wrapper
 export PATH=$HOME/.local/bin:$PATH
 
 # Solves - ValueError: unknown locale: UTF-8 in Python
@@ -39,41 +25,42 @@ export PATH=$PATH:$SCALA_HOME/bin
 SPARK_HOME="/opt/spark/spark-1.6.1-bin-hadoop2.6"
 export PATH="$PATH:$SPARK_HOME/bin"
 
+# bin
+export PATH=$PATH:$HOME/bin
+
 # Powerlines - powerline.readthedocs.org
-. /usr/local/lib/python2.7/site-packages/powerline/bindings/zsh/powerline.zsh
+export PATH=$PATH:$HOME/Library/Python/2.7/bin
+# Done by the 'agnoster' oh-my-zsh packaged theme, redundant, but in a good way:
+. $(pip show powerline-status | grep Location | awk -F": " '{print $2}')/powerline/bindings/zsh/powerline.zsh
+
+# Blat in any direcctories with custom functions listed here:
+# Or `ln` them into `$HOME/.oh-my-zsh/custom`
+if [ -e "$HOME/.functions_extra" ]
+then
+  cat $HOME/.functions_extra | while read d; do . $d/*; done
+fi
+
+# SSH
+SSH_AUTH_SOCK=~/.agent_ssh_auth_sock
+
+# `brew install thefuck`
+eval "$(thefuck --alias)"
+
+# Borked and/or Old
 
 # Stack
 # NOT WORKING: eval "$(stack --bash-completion-script stack)"
 
-# bin
-export PATH=$PATH:$HOME/bin
-
-# thefuck
-eval "$(thefuck --alias)"
-
 # DCOS
-# source /Users/brian.mulder/GitHub/dcos/dcos-vagrant/bin/env-setup
+# source $HOME/github.com/dcos/dcos-vagrant/bin/env-setup
 
 # rbenv - https://github.com/sstephenson/rbenv
 # if which rbenv > /dev/null; then eval "$(rbenv init -)"; fi
 
-# ZBI
-export GETTING_STARTED=~/code.br.zbi.cba/ZBI/getting-started
-. $GETTING_STARTED/p-proxy.functions
-
-SSH_AUTH_SOCK=~/.agent_ssh_auth_sock
-
-# Call this if the above has been blown away
-ssh-reagent () {
-  for agent in /var/folders/zt/**/T/ssh-*/*; do
-      export SSH_AUTH_SOCK=$agent
-      if ssh-add -l 2>&1 > /dev/null; then
-         echo Found working SSH Agent:
-         # Persist the socket for conveniance
-         ln -fs $SSH_AUTH_SOCK $HOME/.agent_ssh_auth_sock
-         ssh-add -l
-         return
-      fi
-  done
-  echo Cannot find ssh agent - maybe you should reconnect and forward it?
-}
+# ghc-mod
+# https://github.com/DanielG/cabal-helper/issues/7
+# "
+# Couldn't find executable cabal-helper-wrapper in directory:
+# /Users/brian.mulder/.stack/global/.stack-work/install/x86_64-osx/lts-3.19/7.10.2/bin/
+# "
+# Found it at: /Users/brian.mulder/.cabal/libexec/cabal-helper-wrapper

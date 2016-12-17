@@ -3,8 +3,8 @@ execute pathogen#infect('pathogens/{}')
 
 set nocompatible
 syntax enable
+syntax on
 set background=dark
-colorscheme solarized
 filetype plugin indent on
 set mouse=a
 
@@ -33,8 +33,7 @@ set dir=~/tmp
 " vimwiki stuff "
 " Run multiple wikis "
 let g:vimwiki_list = [
-                        \{'path': '~/Documents/Work/work.vimwiki'},
-                        \{'path': '~/Documents/Personal/personal.vimwiki'}
+                        \{'path': '~/vimwiki'}
                 \]
 " Automatic syntax highlighting in vimwiki
 let automatic_nested_syntaxes=1

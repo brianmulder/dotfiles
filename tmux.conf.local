@@ -1,4 +1,4 @@
-# Use with `source-file /Users/brian/github.com/brianmulder/dotfiles/tmux.conf.local`
+# Use with `source-file $HOME/github.com/brianmulder/dotfiles/tmux.conf.local`
 
 unbind C-a
 set -g prefix C-b
@@ -33,7 +33,7 @@ setw -g automatic-rename off
 set-option -g allow-rename off
 
 ## Coloring
-source "/Users/brian/github.com/altercation/solarized/tmux/tmuxcolors-dark.conf"
+source "$HOME/github.com/altercation/solarized/tmux/tmuxcolors-dark.conf"
 
 run-shell "powerline-daemon -q"
 source "/usr/local/lib/python2.7/site-packages/powerline/bindings/tmux/powerline.conf"
