@@ -33,11 +33,18 @@ export PATH=$PATH:$HOME/Library/Python/2.7/bin
 # Done by the 'agnoster' oh-my-zsh packaged theme, redundant, but in a good way:
 . $(pip show powerline-status | grep Location | awk -F": " '{print $2}')/powerline/bindings/zsh/powerline.zsh
 
+source $HOME/github.com/brianmulder/dotfiles/aliases
+source $HOME/github.com/brianmulder/scripts/functions
+
+# For anything that doesn't belong in source control.
+source $HOME/.extra.envs
+
 # Blat in any direcctories with custom functions listed here:
 # Or `ln` them into `$HOME/.oh-my-zsh/custom`
+# Note: Individual files must be suffixed with .zsh I think...
 if [ -e "$HOME/.functions_extra" ]
 then
-  cat $HOME/.functions_extra | while read d; do . $d/*; done
+  cat $HOME/.functions_extra | while read d; do source $d/*; done
 fi
 
 # SSH
@@ -64,3 +71,4 @@ eval "$(thefuck --alias)"
 # /Users/brian.mulder/.stack/global/.stack-work/install/x86_64-osx/lts-3.19/7.10.2/bin/
 # "
 # Found it at: /Users/brian.mulder/.cabal/libexec/cabal-helper-wrapper
+
