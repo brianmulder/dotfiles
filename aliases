@@ -1,7 +1,6 @@
 # Automations
 alias cdr=cd_repo
-alias cdw='cd $HOME/Documents/Work/work.vimwiki'
-alias cdp='cd $HOME/Documents/Personal/personal.vimwiki'
+alias cdw='cd $HOME/vimwiki'
 
 # Cool
 alias utc='date -u +"%Y-%m-%dT%H:%M:%SZ"'
