@@ -32,9 +32,10 @@ setw -g automatic-rename off
 # Sane names
 set-option -g allow-rename off
 
-## Coloring
+# Coloring
+# mkdir -p $HOME/github.com/altercation
+# git clone https://github.com/altercation/solarized.git $HOME/github.com/altercation/solarized
 source "$HOME/github.com/altercation/solarized/tmux/tmuxcolors-dark.conf"
 
 run-shell "powerline-daemon -q"
-source "/usr/local/lib/python2.7/site-packages/powerline/bindings/tmux/powerline.conf"
-
+source "${POWERLINES_REPOSITORY_ROOT}/powerline/bindings/tmux/powerline.conf"
