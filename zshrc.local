@@ -31,7 +31,6 @@ export PATH=$PATH:$HOME/bin
 # Powerlines - powerline.readthedocs.org
 export PATH=$PATH:$HOME/Library/Python/2.7/bin
 export POWERLINES_REPOSITORY_ROOT=$(pip show powerline-status | grep Location | cut -f 2 -d ":" | tr -d ' ')
-# Done by the 'agnoster' oh-my-zsh packaged theme, redundant, but in a good way:
 . $POWERLINES_REPOSITORY_ROOT/powerline/bindings/zsh/powerline.zsh
 
 source $HOME/github.com/brianmulder/dotfiles/aliases
