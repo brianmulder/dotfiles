@@ -1,11 +1,10 @@
 # Use with `source-file $HOME/github.com/brianmulder/dotfiles/tmux.conf.local`
 
-set-option -g default-command "reattach-to-user-namespace -l zsh"
-
 unbind C-a
 set -g prefix C-b
 
 set -g default-shell /bin/zsh
+set-option -g default-command "reattach-to-user-namespace -l zsh"
 
 # Use vim keybindings in copy mode
 # https://evertpot.com/osx-tmux-vim-copy-paste-clipboard/
