@@ -1,6 +1,7 @@
 # Automations
 alias cdr=cd_repo
 alias cdw='cd $HOME/vimwiki'
+alias clearb="clear && printf '\33c\e[3J'"
 
 # Cool
 alias utc='date -u +"%Y-%m-%dT%H:%M:%SZ"'
