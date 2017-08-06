@@ -44,7 +44,7 @@ bind-key U setw synchronize-panes off
 set -g history-limit 1000000
 
 ## status bar
-setw -g automatic-rename off
+setw -g automatic-rename on
 
 # Sane names
 set-option -g allow-rename off
