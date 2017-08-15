@@ -57,6 +57,9 @@ export SSH_AUTH_SOCK=~/.agent_ssh_auth_sock
 eval "$(thefuck --alias)"
 eval "$(direnv hook zsh)"
 
+# Because its awesome
+eval "$(direnv hook zsh)"
+
 # Borked and/or Old
 
 # Stack
