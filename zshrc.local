@@ -30,7 +30,7 @@ export PATH=$PATH:$HOME/bin
 
 # Powerlines - powerline.readthedocs.org
 export PATH=$PATH:$HOME/Library/Python/2.7/bin
-export POWERLINES_REPOSITORY_ROOT=$(pip show powerline-status | grep Location | cut -f 2 -d ":" | tr -d ' ')
+export POWERLINES_REPOSITORY_ROOT=$(pip2 show powerline-status | grep Location | cut -f 2 -d ":" | tr -d ' ')
 . $POWERLINES_REPOSITORY_ROOT/powerline/bindings/zsh/powerline.zsh
 
 # OSX provides an older version of sqlite3, we override
@@ -59,6 +59,9 @@ eval "$(direnv hook zsh)"
 
 # Because its awesome
 eval "$(direnv hook zsh)"
+
+# PERL_MM_OPT="INSTALL_BASE=$HOME/perl5" cpan local::lib
+eval "$(perl -I$HOME/perl5/lib/perl5 -Mlocal::lib)"
 
 # Borked and/or Old
 
