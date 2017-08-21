@@ -33,6 +33,9 @@ export PATH=$PATH:$HOME/Library/Python/2.7/bin
 export POWERLINES_REPOSITORY_ROOT=$(pip2 show powerline-status | grep Location | cut -f 2 -d ":" | tr -d ' ')
 . $POWERLINES_REPOSITORY_ROOT/powerline/bindings/zsh/powerline.zsh
 
+# Godep
+export GOPATH=$HOME/go
+
 # OSX provides an older version of sqlite3, we override
 export PATH="/usr/local/opt/sqlite/bin:$PATH"
 
