@@ -26,6 +26,15 @@ let NERDTreeShowHidden=1
 map <C-n> :NERDTreeToggle<CR>
 autocmd bufenter * if (winnr("$") == 1 && exists("b:NERDTree") && b:NERDTree.isTabTree()) | q | endif
 
+" https://github.com/terryma/vim-multiple-cursors
+" Cloned to ~/.vim/pathogens
+let g:multi_cursor_use_default_mapping=0
+let g:multi_cursor_next_key='<C-k>'
+" Default mapping
+let g:multi_cursor_prev_key='<C-p>'
+let g:multi_cursor_skip_key='<C-x>'
+let g:multi_cursor_quit_key='<Esc>'
+
 autocmd FileType ruby set sw=2 sts=2 et
 set noswapfile
 set dir=~/tmp
