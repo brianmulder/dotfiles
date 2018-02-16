@@ -20,6 +20,11 @@ set softtabstop=2
 :let ruby_fold=1
 :let mapleader=','
 
+" Python linter
+" git clone https://github.com/nvie/vim-flake8.git
+:let g:flake8_show_in_file=1
+autocmd BufWritePost *.py call Flake8()
+
 " Doesn't play so nice with vimwiki
 " autocmd vimenter * NERDTree
 let NERDTreeShowHidden=1

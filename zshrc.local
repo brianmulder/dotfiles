@@ -49,9 +49,9 @@ export PATH="/usr/local/opt/sqlite/bin:$PATH"
 export PATH=$PATH:$HOME/Library/Python/2.7/bin
 # Update (manual, laggy):
 # pip2 show powerline-status | grep Location | cut -f 2 -d ":" | tr -d ' '
-export POWERLINES_REPOSITORY_ROOT=/Users/brianfm/Library/Python/2.7/lib/python/site-packages
+# echo "export POWERLINES_REPOSITORY_ROOT=$(pip2 show powerline-status | grep Location | cut -f 2 -d ":" | tr -d ' ')" >> ~/.extra.envs
 # powerline-daemon --quiet
-#. $POWERLINES_REPOSITORY_ROOT/powerline/bindings/zsh/powerline.zsh
+# . $POWERLINES_REPOSITORY_ROOT/powerline/bindings/zsh/powerline.zsh
 
 source $HOME/github.com/brianmulder/dotfiles/aliases
 source $HOME/github.com/brianmulder/scripts/functions
