@@ -46,7 +46,8 @@ export GOPATH=$HOME/go
 export PATH="/usr/local/opt/sqlite/bin:$PATH"
 
 # Powerlines - powerline.readthedocs.org
-export PATH=$PATH:$HOME/Library/Python/2.7/bin
+# export PATH=$PATH:$HOME/Library/Python/2.7/bin
+export PATH=/usr/local/opt/python/libexec/bin:$PATH
 # Update (manual, laggy):
 # pip2 show powerline-status | grep Location | cut -f 2 -d ":" | tr -d ' '
 # echo "export POWERLINES_REPOSITORY_ROOT=$(pip2 show powerline-status | grep Location | cut -f 2 -d ":" | tr -d ' ')" >> ~/.extra.envs
