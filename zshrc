@@ -54,6 +54,9 @@ source $ZSH/oh-my-zsh.sh
 
 # User configuration
 
+export NOTES_DIR=$HOME/Dropbox/Fred/Zettelkasten/permanent-notes
+export JOURNAL_DIR=$HOME/journal
+
 export PATH="/usr/local/sbin:$PATH"
 eval $(thefuck --alias)
 
@@ -81,3 +84,4 @@ eval $(thefuck --alias)
 # alias zshconfig="mate ~/.zshrc"
 # alias ohmyzsh="mate ~/.oh-my-zsh"
 alias jnl=journal.sh
+alias cdj="cd $JOURNAL_DIR"

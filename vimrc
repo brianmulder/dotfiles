@@ -14,9 +14,19 @@ set hlsearch   " highlight all results
 set ignorecase " ignore case in search
 set incsearch  " show search results as you type
 
+" Tabbing
+set tabstop      =2
+set softtabstop  =2
+set shiftwidth   =2
+set expandtab
+
 " An example key mapping with the <leader>
 " not a particularly usefull example mind you
 " nnoremap <leader>bn :bn<cr>
+" `cd` to the current open file
+nnoremap <leader>cd :cd %:p:h<cr>:pwd<cr>
+nnoremap <leader>ni :e $NOTES_DIR/index.md<cr>:cd $NOTES_DIR<cr>
+nnoremap <leader>nj :e $JOURNAL_DIR/journal.md<cr>:cd $JOURNAL_DIR<cr>
 
 " Ensure backspace *just* works
 " https://vi.stackexchange.com/questions/2162/why-doesnt-the-backspace-key-work-in-insert-mode
