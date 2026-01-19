@@ -1,0 +1,66 @@
+#!/usr/bin/env bash
+set -euo pipefail
+
+repo_dir="$(cd "$(dirname "${BASH_SOURCE[0]}")/.." && pwd)"
+zshrc="$repo_dir/zsh/.zshrc"
+zshenv="$repo_dir/zsh/.zshenv"
+
+usage() {
+  cat <<'EOF'
+Usage: scripts/profile-zsh-startup [options]
+
+Options:
+  --profile         Set ZSH_PROFILE=1 (prints zprof output)
+EOF
+}
+
+ZSH_PROFILE="${ZSH_PROFILE:-}"
+
+while [[ $# -gt 0 ]]; do
+  case "$1" in
+    --profile) ZSH_PROFILE=1 ;;
+    -h | --help)
+      usage
+      exit 0
+      ;;
+    *)
+      echo "Unknown arg: $1" >&2
+      usage >&2
+      exit 2
+      ;;
+  esac
+  shift
+done
+
+time_bin="/usr/bin/time"
+if [[ ! -x "$time_bin" ]]; then
+  time_bin="time"
+fi
+
+zsh_env=()
+[[ -n "$ZSH_PROFILE" ]] && zsh_env+=(ZSH_PROFILE=1)
+zdotdir="$(mktemp -d)"
+trap 'rm -rf "$zdotdir"' EXIT
+
+cat >"$zdotdir/.zshenv" <<EOF
+export ZDOTDIR=$(printf %q "$zdotdir")
+source $(printf %q "$zshenv")
+EOF
+
+cat >"$zdotdir/.zshrc" <<EOF
+source $(printf %q "$zshrc")
+EOF
+
+zsh_env+=(ZDOTDIR="$zdotdir")
+
+echo "Running zsh startup timing..."
+echo "  zshrc: $zshrc"
+echo "  env:   ${zsh_env[*]:-(none)}"
+echo
+
+[[ -n "$ZSH_PROFILE" ]] && export ZSH_PROFILE=1
+export ZDOTDIR="$zdotdir"
+if [[ -n "$ZSH_PROFILE" ]]; then
+  exec "$time_bin" -f "zsh startup: %e s" /usr/bin/zsh -i -c 'exit'
+fi
+exec "$time_bin" -f "zsh startup: %e s" /usr/bin/zsh -i -c 'exit' >/dev/null

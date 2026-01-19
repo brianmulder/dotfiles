@@ -1,0 +1,99 @@
+#!/usr/bin/env bash
+set -euo pipefail
+
+repo_dir="$(cd "$(dirname "${BASH_SOURCE[0]}")/.." && pwd)"
+init_lua="$repo_dir/nvim/.config/nvim/init.lua"
+
+usage() {
+  cat <<'EOF'
+Usage: scripts/profile-nvim-startup [options]
+
+Options:
+  --dotfiles     Use repo init.lua (default)
+  --clean        Use -u NONE -U NONE (no config)
+  --isolate-xdg  Use temp XDG cache/state dirs (auto-enabled if needed)
+  --log <path>   Write startuptime log to path (default: /tmp/nvim-startuptime.log)
+EOF
+}
+
+mode="dotfiles"
+log="${NVIM_STARTUP_LOG:-/tmp/nvim-startuptime.log}"
+isolate_xdg=0
+
+while [[ $# -gt 0 ]]; do
+  case "$1" in
+    --dotfiles) mode="dotfiles" ;;
+    --clean) mode="clean" ;;
+    --isolate-xdg) isolate_xdg=1 ;;
+    --log)
+      shift
+      log="${1:-}"
+      [[ -n "$log" ]] || { echo "--log requires a path" >&2; exit 2; }
+      ;;
+    -h | --help)
+      usage
+      exit 0
+      ;;
+    *)
+      echo "Unknown arg: $1" >&2
+      usage >&2
+      exit 2
+      ;;
+  esac
+  shift
+done
+
+if ! command -v nvim >/dev/null 2>&1; then
+  echo "nvim not found in PATH" >&2
+  exit 1
+fi
+
+rm -f "$log"
+
+xdg_tmp_dir=""
+maybe_isolate_xdg() {
+  local state_home="${XDG_STATE_HOME:-$HOME/.local/state}"
+  if mkdir -p "$state_home" 2>/dev/null; then
+    local probe="$state_home/.nvim-profile-write-test.$$"
+    if ( : >"$probe" ) 2>/dev/null; then
+      rm -f "$probe" 2>/dev/null || true
+      return 0
+    fi
+  fi
+
+  isolate_xdg=1
+}
+
+maybe_isolate_xdg
+if (( isolate_xdg == 1 )); then
+  xdg_tmp_dir="$(mktemp -d)"
+  trap 'rm -rf "$xdg_tmp_dir"' EXIT
+
+  export XDG_CACHE_HOME="$xdg_tmp_dir/cache"
+  export XDG_STATE_HOME="$xdg_tmp_dir/state"
+  mkdir -p "$XDG_CACHE_HOME" "$XDG_STATE_HOME" 2>/dev/null || true
+fi
+
+echo "Running nvim startup timing..."
+echo "  mode: $mode"
+echo "  log:  $log"
+if (( isolate_xdg == 1 )); then
+  echo "  xdg:  isolated ($xdg_tmp_dir)"
+fi
+
+case "$mode" in
+  clean)
+    nvim --headless --startuptime "$log" -u NONE -U NONE +'qall' >/dev/null
+    ;;
+  dotfiles)
+    nvim --headless --startuptime "$log" -u "$init_lua" -U NONE +'qall' >/dev/null
+    ;;
+  *)
+    echo "Unknown mode: $mode" >&2
+    exit 2
+    ;;
+esac
+
+echo
+echo "Top lines (slowest first):"
+head -n 20 "$log" | sed 's/^/  /'

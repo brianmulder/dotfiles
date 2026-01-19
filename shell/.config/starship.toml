@@ -1,0 +1,39 @@
+# Minimal Starship prompt (powerline-ish, low cognitive load).
+# Requires a Nerd Font in your terminal for separators/icons to render.
+
+add_newline = false
+
+command_timeout = 200
+scan_timeout = 30
+
+format = """$username$hostname$directory$git_branch$git_status$character"""
+
+[character]
+success_symbol = "[❯](bold green)"
+error_symbol = "[❯](bold red)"
+
+[username]
+show_always = true
+format = "[$user]($style)"
+style_user = "fg:244"
+style_root = "bold fg:160"
+
+[hostname]
+ssh_only = false
+format = "[@$hostname]($style) "
+style = "fg:244"
+
+[directory]
+truncation_length = 3
+truncate_to_repo = true
+format = "[](fg:#cba6f7)[ $path ](fg:#1e1e2e bg:#cba6f7)[](fg:#cba6f7) "
+
+[git_branch]
+format = "[ $symbol$branch ](fg:#1e1e2e bg:#89b4fa)[](fg:#89b4fa) "
+symbol = " "
+
+[git_status]
+format = "[$all_status$ahead_behind](fg:#89b4fa) "
+
+[cmd_duration]
+disabled = true

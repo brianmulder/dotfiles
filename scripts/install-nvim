@@ -1,0 +1,56 @@
+#!/usr/bin/env bash
+set -euo pipefail
+
+dest_dir="${NVIM_INSTALL_DIR:-$HOME/.local/nvim}"
+bin_dir="${NVIM_BIN_DIR:-$HOME/.local/bin}"
+
+if ! command -v curl >/dev/null 2>&1; then
+  echo "curl is required" >&2
+  exit 1
+fi
+
+if ! command -v tar >/dev/null 2>&1; then
+  echo "tar is required" >&2
+  exit 1
+fi
+
+tmp_dir="$(mktemp -d)"
+cleanup() { rm -rf "$tmp_dir"; }
+trap cleanup EXIT
+
+arch="$(uname -m)"
+case "$arch" in
+  x86_64) platform="linux-x86_64" ;;
+  aarch64 | arm64) platform="linux-arm64" ;;
+  *)
+    echo "Unsupported architecture: $arch" >&2
+    exit 1
+    ;;
+esac
+
+archive="$tmp_dir/nvim-linux64.tar.gz"
+echo "Downloading Neovim..."
+curl -fsSL -o "$archive" "https://github.com/neovim/neovim/releases/latest/download/nvim-${platform}.tar.gz"
+
+echo "Extracting..."
+tar -C "$tmp_dir" -xzf "$archive"
+
+if [ ! -d "$tmp_dir/nvim-${platform}" ]; then
+  echo "Unexpected archive layout (missing nvim-${platform} directory)" >&2
+  exit 1
+fi
+
+mkdir -p "$bin_dir"
+rm -rf "$dest_dir"
+mv "$tmp_dir/nvim-${platform}" "$dest_dir"
+
+ln -sf "$dest_dir/bin/nvim" "$bin_dir/nvim"
+rm -f "$bin_dir/nvimdiff"
+cat >"$bin_dir/nvimdiff" <<'EOF'
+#!/usr/bin/env bash
+exec nvim -d "$@"
+EOF
+chmod +x "$bin_dir/nvimdiff"
+
+echo "Installed:"
+"$bin_dir/nvim" --version | head -n 2

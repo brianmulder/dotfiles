@@ -1,0 +1,12 @@
+.DS_Store
+*.swp
+*.swo
+*~
+__pycache__/
+.nvimlog
+# Repo does not track Codex config/rules.
+codex/
+git/.gitconfig.local
+tmux/.config/tmux/plugins/*
+!tmux/.config/tmux/plugins/tpm
+.delete

@@ -1,0 +1,81 @@
+[init]
+	defaultBranch = main
+
+[core]
+	pager = less -FRX
+	editor = nvim
+	excludesfile = ~/.config/git/ignore
+
+[color]
+	ui = auto
+
+[branch]
+	sort = -committerdate
+
+[fetch]
+	prune = true
+	pruneTags = true
+
+[pull]
+	ff = only
+
+[rebase]
+	autoStash = true
+
+[rerere]
+	enabled = true
+
+[diff]
+	tool = vimdiff
+	algorithm = histogram
+	colorMoved = default
+
+[difftool]
+	prompt = false
+
+[merge]
+	conflictstyle = diff3
+[mergetool]
+	prompt = false
+	keepBackup = false
+
+[alias]
+	# Quality-of-life
+	st = status -sb
+	co = checkout
+	sw = switch
+	rs = restore
+	br = branch -vv
+	a = add
+	aa = add -A
+	ap = add -p
+	unstage = restore --staged --
+	ci = commit
+	cm = commit -m
+	ca = commit --amend
+	cane = commit --amend --no-edit
+	last = log -1 --stat
+	root = rev-parse --show-toplevel
+	aliases = !git config --get-regexp '^alias\\.' | sed 's/^alias\\.//'
+
+	# Diffs
+	dc = diff --cached
+	d = difftool
+
+	# Pretty logs
+	l = log --oneline --decorate
+	ls = log --stat
+	lg = log --graph --abbrev-commit --decorate --date=relative --pretty=format:'%C(auto)%h%Creset %C(dim white)%ad%Creset %C(bold blue)%an%Creset%C(auto)%d%Creset %s'
+	lga = log --graph --abbrev-commit --decorate --date=relative --all --pretty=format:'%C(auto)%h%Creset %C(dim white)%ad%Creset %C(bold blue)%an%Creset%C(auto)%d%Creset %s'
+
+	# Branch views (local + remote), newest first
+	bv = for-each-ref --sort=-committerdate --format='%(if)%(HEAD)%(then)*%(else) %(end) %(color:yellow)%(refname:short)%(color:reset) %(color:green)%(upstream:short)%(color:reset) %(color:cyan)%(committerdate:relative)%(color:reset) %(subject)' refs/heads
+	bva = for-each-ref --sort=-committerdate --format='%(if)%(HEAD)%(then)*%(else) %(end) %(color:yellow)%(refname:short)%(color:reset) %(color:green)%(upstream:short)%(color:reset) %(color:cyan)%(committerdate:relative)%(color:reset) %(subject)' refs/heads refs/remotes
+
+	# Safe pushes
+	pf = push --force-with-lease
+	po = push -u origin HEAD
+
+# Local, untracked overrides (identity, credentials, etc).
+[include]
+	path = ~/.gitconfig.local

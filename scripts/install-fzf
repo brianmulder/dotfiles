@@ -1,0 +1,52 @@
+#!/usr/bin/env bash
+set -euo pipefail
+
+if ! command -v curl >/dev/null 2>&1; then
+  echo "curl is required (try: sudo apt-get install -y curl)" >&2
+  exit 1
+fi
+
+if ! command -v tar >/dev/null 2>&1; then
+  echo "tar is required (try: sudo apt-get install -y tar)" >&2
+  exit 1
+fi
+
+os="$(uname -s)"
+arch="$(uname -m)"
+
+if [ "$os" != "Linux" ]; then
+  echo "This installer currently supports Linux only (got: $os)" >&2
+  exit 1
+fi
+
+case "$arch" in
+  x86_64) asset_arch="amd64" ;;
+  aarch64 | arm64) asset_arch="arm64" ;;
+  *)
+    echo "Unsupported arch: $arch" >&2
+    exit 1
+    ;;
+esac
+
+tmp_dir="$(mktemp -d)"
+cleanup() { rm -rf "$tmp_dir"; }
+trap cleanup EXIT
+
+tag="$(
+  curl -fsSL "https://api.github.com/repos/junegunn/fzf/releases/latest" \
+    | python3 -c 'import json, sys; print(json.load(sys.stdin)["tag_name"])'
+)"
+
+version="${tag#v}"
+asset="fzf-${version}-linux_${asset_arch}.tar.gz"
+url="https://github.com/junegunn/fzf/releases/download/${tag}/${asset}"
+
+echo "Downloading fzf ${tag} (${asset_arch})..."
+curl -fL "$url" -o "$tmp_dir/fzf.tgz"
+tar -xzf "$tmp_dir/fzf.tgz" -C "$tmp_dir"
+
+mkdir -p "$HOME/.local/bin"
+install -m 0755 "$tmp_dir/fzf" "$HOME/.local/bin/fzf"
+
+echo "Installed: $HOME/.local/bin/fzf"
+echo "Version: $("$HOME/.local/bin/fzf" --version | awk '{print $1}')"

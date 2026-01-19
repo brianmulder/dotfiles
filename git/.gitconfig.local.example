@@ -1,0 +1,15 @@
+# Local, untracked git overrides (example)
+#
+# Create `~/.gitconfig.local` and put machine-specific settings here.
+# This repo intentionally does not track that file (identity/credentials are personal).
+
+[user]
+	name = Your Name
+	email = you@example.com
+
+# Optional: credentials (pick what you actually use)
+#[credential]
+#	helper = /usr/local/bin/git-credential-manager
+#
+#[credential "https://dev.azure.com"]
+#	useHttpPath = true
