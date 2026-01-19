@@ -62,6 +62,7 @@ Notes:
 - tmux config (XDG) + plugins: `tmux/.config/tmux/tmux.conf`
 - Neovim config (Lua) + plugins: `nvim/.config/nvim/init.lua`
 - Git defaults + aliases: `git/.gitconfig`
+- Airlock defaults (optional): `shell/.airlock/config.toml` → `~/.airlock/config.toml`
 
 ## Git (aliases + views)
 
@@ -231,6 +232,7 @@ Grammar/style diagnostics are provided by the `ltex` LSP (via `mason.nvim`) for 
 - Neovim seems “old”: `command -v nvim` should be `~/.local/bin/nvim`; if not, rerun `./scripts/install-nvim`
 - `fd` missing: Ubuntu installs it as `fdfind`; the symlink in the TL;DR makes tools happier.
 - If commits have no identity, create `~/.gitconfig.local` (see `~/.gitconfig.local.example`).
+- Airlock `config.toml`: requires `python3` with `tomllib` (Python 3.11+) or `tomli` installed; otherwise Airlock will warn and ignore the TOML defaults.
 
 ## Dotfiles doctor
 

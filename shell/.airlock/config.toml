@@ -1,0 +1,34 @@
+# Airlock defaults (optional).
+#
+# This file is used by Airlock's config loader (see `docs/configuration.md` in the Airlock repo).
+# It is intentionally "public defaults" and should not contain secrets.
+#
+# Precedence:
+#   CLI flags > env vars > this file (incl. profile overrides) > Airlock built-ins
+
+[airlock]
+engine = "podman"                 # AIRLOCK_ENGINE
+image = "airlock-agent:local"     # AIRLOCK_IMAGE
+network = "bridge"                # AIRLOCK_NETWORK
+mount_opencode = true             # AIRLOCK_MOUNT_OPENCODE
+mount_engine_socket = false       # AIRLOCK_MOUNT_ENGINE_SOCKET (high-trust; keep off by default)
+add_dirs = []                     # AIRLOCK_ADD_DIRS (colon-joined)
+mount_ros = []                    # AIRLOCK_MOUNT_ROS (colon-joined)
+publish_ports = []                # AIRLOCK_PUBLISH_PORTS (comma-joined)
+
+[build]
+base_image = "mcr.microsoft.com/devcontainers/javascript-node:20-bookworm" # AIRLOCK_BASE_IMAGE
+codex_version = "latest"          # AIRLOCK_CODEX_VERSION
+opencode_version = "latest"       # AIRLOCK_OPENCODE_VERSION
+npm_version = "latest"            # AIRLOCK_NPM_VERSION
+editor_pkg = "vim-tiny"           # AIRLOCK_EDITOR_PKG
+pull = true                       # AIRLOCK_PULL
+build_isolation = "chroot"        # AIRLOCK_BUILD_ISOLATION (podman only; optional)
+build_userns = ""                 # AIRLOCK_BUILD_USERNS (podman only; optional)
+
+[profiles.dock]
+mount_engine_socket = false
+
+[profiles.yolo]
+mount_engine_socket = true
+

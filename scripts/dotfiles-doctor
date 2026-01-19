@@ -377,6 +377,42 @@ else
   warn "lualine.nvim: not installed yet (open nvim to sync plugins)"
 fi
 
+section "Airlock (optional)"
+if has_cmd airlock || has_cmd yolo; then
+  if has_cmd airlock; then
+    ok "cmd: airlock ($(command -v airlock))"
+  else
+    warn "cmd: airlock (missing; but yolo is present)"
+  fi
+  if has_cmd yolo; then
+    ok "cmd: yolo ($(command -v yolo))"
+  else
+    warn "cmd: yolo (missing; but airlock is present)"
+  fi
+
+  check_managed_file "$HOME/.airlock/config.toml" "$repo_dir/shell/.airlock/config.toml" "$HOME/.airlock/config.toml"
+
+  if has_cmd python3; then
+    if python3 - <<'PY' >/dev/null 2>&1
+import sys
+try:
+    import tomllib  # py311+
+except Exception:
+    import tomli  # py310 + pip
+sys.exit(0)
+PY
+    then
+      ok "airlock config.toml parser: python3 tomllib/tomli available"
+    else
+      warn "airlock config.toml parser: missing (need python3.11 tomllib or install tomli; otherwise Airlock ignores ~/.airlock/config.toml)"
+    fi
+  else
+    warn "airlock config.toml parser: python3 missing (Airlock may ignore ~/.airlock/config.toml)"
+  fi
+else
+  warn "airlock: not installed (optional)"
+fi
+
 printf "\nSummary: %d ok, %d warn, %d fail\n" "$ok_count" "$warn_count" "$fail_count"
 if [ "$fail_count" -gt 0 ]; then
   exit 1
