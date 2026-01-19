@@ -390,6 +390,15 @@ if has_cmd airlock || has_cmd yolo; then
     warn "cmd: yolo (missing; but airlock is present)"
   fi
 
+  if [ -f "$repo_dir/.gitmodules" ] && rg -n "vendor/airlock-agent" "$repo_dir/.gitmodules" >/dev/null 2>&1; then
+    ok "airlock submodule: configured (vendor/airlock-agent)"
+    if [ -f "$repo_dir/vendor/airlock-agent/stow/airlock/bin/airlock" ]; then
+      ok "airlock submodule: initialized"
+    else
+      warn "airlock submodule: not initialized (run: git -C \"$repo_dir\" submodule update --init --recursive)"
+    fi
+  fi
+
   check_managed_file "$HOME/.airlock/config.toml" "$repo_dir/shell/.airlock/config.toml" "$HOME/.airlock/config.toml"
 
   if has_cmd python3; then

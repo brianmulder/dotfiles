@@ -10,7 +10,7 @@ The repo is organized into Stow packages (each folder contains files laid out as
 sudo apt-get update
 sudo apt-get install -y stow zsh tmux xclip ripgrep fd-find curl
 cd ~/code/github.com/brianmulder/dotfiles
-git submodule update --init --recursive   # tmux TPM is vendored as a submodule
+git submodule update --init --recursive   # tmux TPM + Airlock are vendored as submodules
 ./scripts/install-nvim
 ./scripts/install-fzf
 ln -sf "$(command -v fdfind)" "$HOME/.local/bin/fd"   # Ubuntu packages fd as fdfind
@@ -240,6 +240,20 @@ Run a quick inventory/health check:
 
 ```bash
 ./scripts/dotfiles-doctor
+```
+
+## Airlock (agent container harness)
+
+Airlock lives in this repo as a git submodule at `vendor/airlock-agent` and is installed via Stow (it installs into
+`~/bin` and `~/.airlock/*`).
+
+```bash
+git submodule update --init --recursive
+mkdir -p ~/.airlock ~/bin
+stow -d ./vendor/airlock-agent/stow -t ~ airlock
+hash -r
+airlock-build
+airlock-doctor
 ```
 
 ## macOS / legacy

@@ -1,3 +1,6 @@
 [submodule "tmux/.config/tmux/plugins/tpm"]
 	path = tmux/.config/tmux/plugins/tpm
 	url = https://github.com/tmux-plugins/tpm
+[submodule "vendor/airlock-agent"]
+	path = vendor/airlock-agent
+	url = https://github.com/brianmulder/airlock-agent.git
