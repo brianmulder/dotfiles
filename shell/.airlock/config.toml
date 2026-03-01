@@ -11,7 +11,7 @@ engine = "podman"                 # AIRLOCK_ENGINE
 image = "airlock-agent:local"     # AIRLOCK_IMAGE
 network = "bridge"                # AIRLOCK_NETWORK
 mount_opencode = true             # AIRLOCK_MOUNT_OPENCODE
-mount_engine_socket = false       # AIRLOCK_MOUNT_ENGINE_SOCKET (high-trust; keep off by default)
+mount_engine_socket = true        # AIRLOCK_MOUNT_ENGINE_SOCKET (high-trust; enabled for speed)
 add_dirs = []                     # AIRLOCK_ADD_DIRS (colon-joined)
 mount_ros = []                    # AIRLOCK_MOUNT_ROS (colon-joined)
 publish_ports = []                # AIRLOCK_PUBLISH_PORTS (comma-joined)
@@ -27,7 +27,7 @@ build_isolation = "chroot"        # AIRLOCK_BUILD_ISOLATION (podman only; option
 build_userns = ""                 # AIRLOCK_BUILD_USERNS (podman only; optional)
 
 [profiles.dock]
-mount_engine_socket = false
+mount_engine_socket = true
 
 [profiles.yolo]
 mount_engine_socket = true
