@@ -179,6 +179,23 @@ require("lazy").setup({
     keys = {
       { "<leader>ff", "<cmd>FzfLua files<cr>", desc = "Find files" },
       { "<leader>fg", "<cmd>FzfLua live_grep<cr>", desc = "Live grep" },
+      {
+        "<leader>fF",
+        function()
+          local ok, fzf = pcall(require, "fzf-lua")
+          if not ok then
+            return
+          end
+          fzf.live_grep({
+            no_ignore = true,
+            no_ignore_parent = true,
+            hidden = true,
+            follow = true,
+            rg_opts = "--column --line-number --no-heading --color=always --smart-case --max-columns=4096 --hidden --follow --glob '!**/.git/*' --glob '!**/node_modules/*' --glob '!**/dist/*' --glob '!**/build/*' --glob '!**/.next/*' -e",
+          })
+        end,
+        desc = "Live grep (all files)",
+      },
       { "<leader>fb", "<cmd>FzfLua buffers<cr>", desc = "Buffers" },
     },
     config = function()

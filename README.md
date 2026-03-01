@@ -170,6 +170,7 @@ Splits:
 Leader is `<Space>` in this config:
 - Find files: `<Space>ff`
 - Live grep: `<Space>fg`
+- Live grep (includes ignored/hidden files, but skips heavy dirs): `<Space>fF`
 - Buffers: `<Space>fb`
 
 ### Literal grep (`rg -F`)
