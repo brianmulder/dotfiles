@@ -1,6 +1,6 @@
-# Dotfiles agent notes (WSL-first)
+# Dotfiles agent notes (WSL-first, Windows-friendly)
 
-This repo is the single source of truth for my WSL dotfiles using **GNU Stow**.
+This repo is the single source of truth for my WSL dotfiles using **GNU Stow**. Native Windows support is additive only: keep the repo WSL-first and use the PowerShell/bootstrap/doctor scripts as a small annex rather than refactoring the whole layout.
 
 ## Repo intent
 
@@ -19,6 +19,7 @@ Each top-level folder is a Stow package whose contents mirror `$HOME`:
 - `tmux/`: tmux config (`~/.tmux.conf` shim + `~/.config/tmux/tmux.conf`)
 - `nvim/`: Neovim config (`~/.config/nvim/init.lua`)
 - `git/`: git config + ignore (`~/.gitconfig`, `~/.config/git/ignore`)
+- `powershell/`: native Windows PowerShell profile (`~/Documents/PowerShell/*`)
 - `vim/`: legacy Vim config (`~/.vimrc`)
 - `legacy/`: historical macOS-era flat dotfiles (reference only)
 - `scripts/`: local bootstrap scripts (e.g. `scripts/install-nvim`)
@@ -41,6 +42,12 @@ Each top-level folder is a Stow package whose contents mirror `$HOME`:
 ### Codex (not tracked)
 
 This repo does not track any `~/.codex/*` config/rules. Keep Codex auth/history local and out of git.
+
+### Native Windows support (additive)
+
+- Native Windows support is PowerShell + `scripts/bootstrap-windows.ps1` + `scripts/dotfiles-doctor-windows.ps1` + small shared-config cleanup. Do not turn the repo into a generic Windows home-manager tree.
+- Prefer explicit auditing over magical fixes: use `where.exe` and `Get-Command` for command resolution. In PowerShell, `where` is `Where-Object`, not `where.exe`.
+- Do not over-own machine PATH history. Keep changes minimal and focused on the repo-managed seam.
 
 ### WSL: Windows PATH shims
 
@@ -93,7 +100,7 @@ This repo does not track any `~/.codex/*` config/rules. Keep Codex auth/history 
 - Document keymaps and “how to use it” in `README.md` for a rusty future me.
 - ShellCheck doesn’t support zsh; lint `scripts/*` and `shell/*` instead of `.zshrc/.zshenv`.
 - Prefer adding/adjusting small “doctor” checks when we learn a new failure mode (PATH shadowing, tool version minimums, fonts).
-- For any non-trivial change, run `./scripts/dotfiles-doctor` before and after, and update `scripts/dotfiles-doctor`, `AGENTS.md`, and `README.md` when a new gotcha/requirement is discovered.
+- For any non-trivial change, run the relevant doctor script before and after (`./scripts/dotfiles-doctor` on WSL, `.\scripts\dotfiles-doctor-windows.ps1` on native Windows), and update the doctor/docs when a new gotcha is discovered.
 
 ## Guardrails (avoid “hack cliff”)
 

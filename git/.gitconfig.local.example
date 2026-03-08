@@ -8,8 +8,19 @@
 	email = you@example.com
 
 # Optional: credentials (pick what you actually use)
-#[credential]
-#	helper = /usr/local/bin/git-credential-manager
 #
+# Windows Git Credential Manager (recommended on native Windows)
+#[credential]
+#	helper = manager-core
+#
+# GitHub CLI (works cross-platform if `gh` is on PATH)
+#[credential "https://github.com"]
+#	helper =
+#	helper = !gh auth git-credential
+#[credential "https://gist.github.com"]
+#	helper =
+#	helper = !gh auth git-credential
+#
+# Azure DevOps sometimes wants the full URL path for credentials
 #[credential "https://dev.azure.com"]
 #	useHttpPath = true

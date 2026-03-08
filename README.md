@@ -1,8 +1,8 @@
-# Dotfiles (WSL-first)
+# Dotfiles (WSL-first, Windows-friendly)
 
-This repo is the single source of truth for my WSL dotfiles (Neovim, tmux, shell, git).
+This repo is the single source of truth for my WSL dotfiles (Neovim, tmux, shell, git), with a small additive native Windows layer for PowerShell, Git, Neovim, and Starship.
 
-The repo is organized into Stow packages (each folder contains files laid out as they should appear in `$HOME`).
+The repo is organized into Stow packages (each folder contains files laid out as they should appear in `$HOME`). Native Windows support is intentionally narrower: use the PowerShell/bootstrap scripts rather than trying to Stow your whole Windows home directory.
 
 ## TL;DR (fresh WSL machine)
 
@@ -17,7 +17,19 @@ ln -sf "$(command -v fdfind)" "$HOME/.local/bin/fd"   # Ubuntu packages fd as fd
 stow -t "$HOME" shell bash zsh git tmux nvim vim
 ```
 
-## Setup
+## TL;DR (native Windows)
+
+```powershell
+cd $HOME\vscode\github.com\brianmulder\dotfiles
+git submodule update --init --recursive
+.\scripts\bootstrap-windows.ps1
+pwsh
+.\scripts\dotfiles-doctor-windows.ps1
+```
+
+The Windows bootstrap is intentionally narrow. It links only the PowerShell profile package, Git config, Neovim config, and Starship config; it does not try to manage your whole Windows home or rewrite PATH for you.
+
+## WSL setup
 
 Install prerequisites:
 
@@ -40,7 +52,30 @@ fzf-lua requires `fzf` >= 0.36 (Ubuntu 22.04 apt ships an older version), so ins
 ./scripts/install-fzf
 ```
 
-## Apply
+## Native Windows setup
+
+Use PowerShell 7 (`pwsh`) on native Windows.
+
+Bootstrap from this repo:
+
+```powershell
+cd $HOME\vscode\github.com\brianmulder\dotfiles
+.\scripts\bootstrap-windows.ps1
+```
+
+Managed links:
+- `powershell/Documents/PowerShell/*` -> `~/Documents/PowerShell/*`
+- `git/.gitconfig` -> `~/.gitconfig`
+- `git/.config/git` -> `~/.config/git`
+- `nvim/.config/nvim` -> `%LOCALAPPDATA%\nvim`
+- `shell/.config/starship.toml` -> `~/.config/starship.toml`
+
+Notes:
+- Use `-WhatIf` to preview changes.
+- If a destination already exists, the script warns and skips it unless you rerun with `-Force`.
+- Restart PowerShell, Windows Terminal, VS Code terminals, and other long-lived apps after PATH changes or new installs.
+
+## Apply (WSL / GNU Stow)
 
 From this repo:
 
@@ -58,11 +93,12 @@ Notes:
 ## What you get (quick tour)
 
 - Shell aliases/helpers shared across bash/zsh: `shell/.config/shell/*`
+- PowerShell profile + helpers on native Windows: `powershell/Documents/PowerShell/*`
 - `zsh` prompt and completions: `zsh/.zshrc`
 - tmux config (XDG) + plugins: `tmux/.config/tmux/tmux.conf`
 - Neovim config (Lua) + plugins: `nvim/.config/nvim/init.lua`
 - Git defaults + aliases: `git/.gitconfig`
-- Airlock defaults (optional): `shell/.airlock/config.toml` → `~/.airlock/config.toml`
+- Airlock defaults (optional): `shell/.airlock/config.toml` -> `~/.airlock/config.toml`
 
 ## Git (aliases + views)
 
@@ -82,16 +118,19 @@ Behavior tweaks (intentionally boring/safe):
 - `git fetch` prunes deleted branches/tags
 - `git pull` is fast-forward only (avoids surprise merge commits)
 
+Credentials stay machine-local in `~/.gitconfig.local`. See `git/.gitconfig.local.example` for native Windows Git Credential Manager and `gh` examples.
+
 ## Powerline (zsh + tmux + Neovim)
 
 To get “powerline” separators/icons, you need a Nerd Font in Windows Terminal.
 
 1) Install a Nerd Font on Windows (recommended: `JetBrainsMono Nerd Font`).
-2) Windows Terminal → Settings → Profiles → Defaults → Appearance → Font face → pick that Nerd Font.
+2) Windows Terminal -> Settings -> Profiles -> Defaults -> Appearance -> Font face -> pick that Nerd Font.
 3) Verify glyphs render (should not show squares): `bash ./scripts/powerline-test`
 
 This repo uses:
 - zsh: `starship` prompt (optional). Install: `bash ./scripts/install-starship` then restart your shell.
+- PowerShell: the profile will initialize `starship` if it is installed and `~/.config/starship.toml` is linked.
 - tmux: a Solarized-ish powerline statusline in `tmux/.config/tmux/tmux.conf`
 - Neovim: `lualine.nvim` statusline (installed via `lazy.nvim`)
 
@@ -203,7 +242,7 @@ Still, it’s handy to run Codex *inside* Neovim sometimes:
 - Prefer a “floater” outside Neovim? Use tmux’s popup:
   - `Ctrl-b` then `P`, then run `codex`
 - If `Ctrl-w` navigation/resizing doesn’t work, you’re probably in terminal input mode:
-  - Exit terminal input → Normal mode: `Ctrl-\\ Ctrl-n`
+  - Exit terminal input -> Normal mode: `Ctrl-\\ Ctrl-n`
   - Back into terminal input: `i`
 - Resize splits:
   - Make right pane thinner/wider: `Ctrl-w <` / `Ctrl-w >`
@@ -234,6 +273,11 @@ Grammar/style diagnostics are provided by the `ltex` LSP (via `mason.nvim`) for 
 - `fd` missing: Ubuntu installs it as `fdfind`; the symlink in the TL;DR makes tools happier.
 - If commits have no identity, create `~/.gitconfig.local` (see `~/.gitconfig.local.example`).
 - Airlock `config.toml`: requires `python3` with `tomllib` (Python 3.11+) or `tomli` installed; otherwise Airlock will warn and ignore the TOML defaults.
+- On native Windows, use `where.exe <cmd>` and `Get-Command <cmd> -All` for real command resolution. In PowerShell, `where` by itself is `Where-Object`.
+- If resolution still looks wrong after changing PATH or installing a tool, restart PowerShell, Windows Terminal, VS Code terminals, and any other long-lived shell host.
+- `WindowsApps` can shadow real CLIs, including `codex`. The desired steady state is for `codex` to resolve from `%APPDATA%\npm\codex`.
+- Prefer `python -m pip ...` over bare `pip ...`.
+- Avoid `npm install -g npm` as the normal Windows upgrade path; upgrade Node/npm with your installer or version manager instead.
 
 ## Dotfiles doctor
 
@@ -241,6 +285,10 @@ Run a quick inventory/health check:
 
 ```bash
 ./scripts/dotfiles-doctor
+```
+
+```powershell
+.\scripts\dotfiles-doctor-windows.ps1
 ```
 
 ## Airlock (agent container harness)
