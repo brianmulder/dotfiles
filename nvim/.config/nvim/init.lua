@@ -72,7 +72,7 @@ do
   })
 end
 
--- Spelling: enable per-filetype in after/ftplugin/* and keep personal words in state/.
+-- Spelling: keep prose checking built-in/lightweight; avoid external grammar LSPs.
 do
   local spell_dir = vim.fn.stdpath("state") .. "/spell"
   vim.fn.mkdir(spell_dir, "p")
@@ -296,14 +296,6 @@ require("lazy").setup({
         },
       })
 
-      vim.lsp.config("ltex", {
-        filetypes = { "gitcommit", "markdown", "text" },
-        settings = {
-          ltex = {
-            language = "en-US",
-          },
-        },
-      })
     end,
   },
   {
@@ -312,7 +304,7 @@ require("lazy").setup({
     event = { "BufReadPre", "BufNewFile" },
     config = function()
       require("mason-lspconfig").setup({
-        ensure_installed = { "lua_ls", "ltex" },
+        ensure_installed = { "lua_ls" },
         automatic_enable = true,
       })
     end,
