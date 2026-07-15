@@ -225,6 +225,7 @@ This config uses `nvim-tree` (modern equivalent of NERDTree):
 ### Spellcheck (prose)
 
 Spellcheck is enabled by default for `markdown`, `text`, and `gitcommit` buffers.
+This repo intentionally uses Neovim's built-in spellcheck for prose, not an external grammar LSP or Java runtime.
 
 - Toggle spellcheck: `<Space>ss`
 - Personal dictionary: `~/.local/state/nvim/spell/en.utf-8.add`
@@ -258,13 +259,6 @@ Still, it’s handy to run Codex *inside* Neovim sometimes:
 - `:ls` shows your open buffers (`%` current, `#` alternate, `+` modified). Switch with `:b N`, `:bn`, `:bp`, or `Ctrl-^` (alternate).
 - Visual selection is a *mode*, not a saved object. Reselect the last selection with `gv`.
 - If you see “stuck highlight”: it’s often search highlighting; clear it with `:noh`. (If it’s Visual mode, `Esc` exits.)
-
-### Grammar/style (LTeX)
-
-Grammar/style diagnostics are provided by the `ltex` LSP (via `mason.nvim`) for prose filetypes.
-
-- Install: `:Mason` then install `ltex` (or `:MasonInstall ltex`)
-- Applies to: `markdown`, `text`, `gitcommit`
 
 ## Troubleshooting
 

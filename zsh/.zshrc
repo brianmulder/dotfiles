@@ -102,3 +102,5 @@ fi
 if [[ -n "${ZSH_PROFILE:-}" ]]; then
   zprof
 fi
+
+. "$HOME/.local/share/../bin/env"
