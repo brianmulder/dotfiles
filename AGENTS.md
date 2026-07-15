@@ -20,6 +20,7 @@ Each top-level folder is a Stow package whose contents mirror `$HOME`:
 - `nvim/`: Neovim config (`~/.config/nvim/init.lua`)
 - `git/`: git config + ignore (`~/.gitconfig`, `~/.config/git/ignore`)
 - `powershell/`: native Windows PowerShell profile (`~/Documents/PowerShell/*`)
+- `agent-skills/`: public skill-management command
 - `vim/`: legacy Vim config (`~/.vimrc`)
 - `legacy/`: historical macOS-era flat dotfiles (reference only)
 - `scripts/`: local bootstrap scripts (e.g. `scripts/install-nvim`)
@@ -41,7 +42,9 @@ Each top-level folder is a Stow package whose contents mirror `$HOME`:
 
 ### Codex (not tracked)
 
-This repo does not track any `~/.codex/*` config/rules. Keep Codex auth/history local and out of git.
+This repo does not track Codex auth, history, runtime state, or private skill
+subscriptions. The `agent-skills` package projects explicitly subscribed skill
+consumers into runtime directories from separately configured authorities.
 
 ### Native Windows support (additive)
 
