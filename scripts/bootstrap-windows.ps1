@@ -11,6 +11,8 @@ $userHome = [Environment]::GetFolderPath('UserProfile')
 $configHome = Join-Path $userHome '.config'
 $documentsPowerShell = Join-Path $userHome 'Documents\PowerShell'
 $localAppData = [Environment]::GetFolderPath('LocalApplicationData')
+$localBin = Join-Path $userHome '.local\bin'
+$localLibexec = Join-Path $userHome '.local\libexec'
 
 $script:AppliedCount = 0
 $script:SkippedCount = 0
@@ -155,6 +157,16 @@ $mappings = @(
         Label = 'Starship config'
         Source = Join-Path $repoRoot 'shell\.config\starship.toml'
         Destination = Join-Path $configHome 'starship.toml'
+    }
+    @{
+        Label = 'Dotfiles skills command'
+        Source = Join-Path $repoRoot 'scripts\dotfiles-skills.ps1'
+        Destination = Join-Path $localBin 'dotfiles-skills.ps1'
+    }
+    @{
+        Label = 'Dotfiles skills implementation'
+        Source = Join-Path $repoRoot 'scripts\dotfiles-skills.py'
+        Destination = Join-Path $localLibexec 'dotfiles-skills.py'
     }
 )
 

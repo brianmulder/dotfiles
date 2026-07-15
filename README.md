@@ -14,7 +14,7 @@ git submodule update --init --recursive   # tmux TPM + Airlock are vendored as s
 ./scripts/install-nvim
 ./scripts/install-fzf
 ln -sf "$(command -v fdfind)" "$HOME/.local/bin/fd"   # Ubuntu packages fd as fdfind
-stow -t "$HOME" shell bash zsh git tmux nvim vim
+stow -t "$HOME" shell bash zsh git tmux nvim vim agent-skills
 ```
 
 ## TL;DR (native Windows)
@@ -81,7 +81,7 @@ From this repo:
 
 ```bash
 cd ~/code/github.com/brianmulder/dotfiles
-stow -t "$HOME" shell bash zsh git tmux nvim vim
+stow -t "$HOME" shell bash zsh git tmux nvim vim agent-skills
 ```
 
 Notes:
@@ -99,6 +99,8 @@ Notes:
 - Neovim config (Lua) + plugins: `nvim/.config/nvim/init.lua`
 - Git defaults + aliases: `git/.gitconfig`
 - Airlock defaults (optional): `shell/.airlock/config.toml` -> `~/.airlock/config.toml`
+- Public agent-skill management mechanism without public subscription metadata:
+  `docs/dotfiles-skills.md`
 
 ## Git (aliases + views)
 
