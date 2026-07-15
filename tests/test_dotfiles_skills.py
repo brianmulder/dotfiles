@@ -1,4 +1,5 @@
 import json
+import hashlib
 import os
 import shutil
 import subprocess
@@ -260,6 +261,28 @@ path = "skills/example-skill"
 
         lock = json.loads((self.private / "skills.lock.json").read_text(encoding="utf-8"))
         self.assertEqual(lock["skills"]["example-skill"]["path"], "skills/example-skill")
+
+    def test_lock_hash_uses_platform_independent_relative_path_order(self):
+        self.write_private_estate()
+        skill = self.private / "skills" / "example-skill"
+        (skill / "a.txt").write_bytes(b"a\r\n")
+        (skill / "Z.txt").write_bytes(b"z\n")
+
+        self.run_cli("lock")
+
+        digest = hashlib.sha256()
+        files = {
+            "SKILL.md": (skill / "SKILL.md").read_bytes().replace(b"\r\n", b"\n"),
+            "Z.txt": b"z\n",
+            "a.txt": b"a\n",
+        }
+        for relative in sorted(files):
+            digest.update(relative.encode())
+            digest.update(b"\0")
+            digest.update(files[relative])
+            digest.update(b"\0")
+        lock = json.loads((self.private / "skills.lock.json").read_text(encoding="utf-8"))
+        self.assertEqual(lock["skills"]["example-skill"]["hash"], digest.hexdigest())
 
     def test_adopt_takes_ownership_only_when_existing_content_matches_source(self):
         self.write_private_estate()

@@ -81,8 +81,11 @@ def expand_path(value: str, *, roots: Roots, source: Path) -> Path:
 
 def package_hash(directory: Path) -> str:
     digest = hashlib.sha256()
-    for path in sorted(item for item in directory.rglob("*") if item.is_file()):
-        relative = path.relative_to(directory).as_posix()
+    files = sorted(
+        ((path.relative_to(directory).as_posix(), path) for path in directory.rglob("*") if path.is_file()),
+        key=lambda item: item[0],
+    )
+    for relative, path in files:
         if any(part in {".git", "__pycache__"} for part in path.parts):
             continue
         if relative == ".dotfiles-skills-managed.json":
