@@ -90,7 +90,8 @@ function Ensure-Link {
         [Parameter(Mandatory)][string]$Destination
     )
 
-    $sourcePath = (Resolve-Path -LiteralPath $Source).Path
+    $sourceItem = Get-Item -LiteralPath $Source -Force
+    $sourcePath = $sourceItem.FullName
     $destinationPath = Get-AbsolutePath $Destination
 
     Ensure-Directory -Path (Split-Path -Parent $destinationPath)
@@ -101,6 +102,14 @@ function Ensure-Link {
         if ($existingTarget -and $existingTarget -eq $sourcePath) {
             Write-Ok ("{0}: {1}" -f $Label, $destinationPath)
             return
+        }
+        if (-not $sourceItem.PSIsContainer -and -not $existingItem.PSIsContainer) {
+            $sourceHash = (Get-FileHash -LiteralPath $sourcePath -Algorithm SHA256).Hash
+            $destinationHash = (Get-FileHash -LiteralPath $destinationPath -Algorithm SHA256).Hash
+            if ($sourceHash -eq $destinationHash) {
+                Write-Ok ("{0}: {1} (copy)" -f $Label, $destinationPath)
+                return
+            }
         }
 
         if (-not $Force) {
@@ -119,8 +128,13 @@ function Ensure-Link {
         }
     }
 
-    if ($PSCmdlet.ShouldProcess($destinationPath, ("Link to {0}" -f $sourcePath))) {
-        New-Item -ItemType SymbolicLink -Path $destinationPath -Target $sourcePath | Out-Null
+    if ($PSCmdlet.ShouldProcess($destinationPath, ("Project from {0}" -f $sourcePath))) {
+        if ($sourceItem.PSIsContainer) {
+            New-Item -ItemType Junction -Path $destinationPath -Target $sourcePath | Out-Null
+        }
+        else {
+            Copy-Item -LiteralPath $sourcePath -Destination $destinationPath
+        }
         $script:AppliedCount += 1
         Write-Ok ("{0}: {1}" -f $Label, $destinationPath)
     }
