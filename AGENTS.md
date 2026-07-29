@@ -1,6 +1,6 @@
 # Dotfiles agent notes (WSL-first, Windows-friendly)
 
-This repo is the single source of truth for my WSL dotfiles using **GNU Stow**. Native Windows support is additive only: keep the repo WSL-first and use the PowerShell/bootstrap/doctor scripts as a small annex rather than refactoring the whole layout.
+This repository is the canonical source for WSL dotfiles using **GNU Stow**. Native Windows support is additive only: keep the repository WSL-first and use the PowerShell/bootstrap/doctor scripts as a small annex rather than refactoring the whole layout.
 
 ## Repo intent
 
@@ -36,9 +36,9 @@ Each top-level folder is a Stow package whose contents mirror `$HOME`:
 
 ### Stow adoption
 
-- We used `stow --adopt` to import existing live WSL configs into:
+- Some existing live WSL configs were imported with `stow --adopt` into:
   - `git/.gitconfig`, `vim/.vimrc`, `codex/.codex/config.toml`, `codex/.codex/rules/default.rules`
-- Avoid `--adopt` for secret-bearing files unless you explicitly intend to move them into the repo.
+- Avoid `--adopt` for secret-bearing files unless moving them into the repository is explicitly intended.
 
 ### Codex (not tracked)
 
@@ -55,7 +55,7 @@ consumers into runtime directories from separately configured authorities.
 ### WSL: Windows PATH shims
 
 - WSL commonly inherits Windows PATH entries. That can cause Windows-installed CLIs to shadow WSL ones.
-- Fix: `shell/.config/shell/env.sh` prepends user-local bins and your NVM Node bin early, so Linux CLIs win on PATH.
+- Fix: `shell/.config/shell/env.sh` prepends user-local bins and the NVM-managed Node bin early, so Linux CLIs win on PATH.
 - If a command is still hashed to a Windows path after switching shells, clear caches: `rehash` (zsh) / `hash -r` (bash).
 
 ### WSL runtime dirs and fzf-lua
@@ -65,12 +65,12 @@ consumers into runtime directories from separately configured authorities.
 
 ### Neovim tooling versions
 
-- `fzf-lua` requires `fzf >= 0.36`. Ubuntu 22.04 apt ships an older `fzf`, so we install a modern one to `~/.local/bin` via `scripts/install-fzf`.
+- `fzf-lua` requires `fzf >= 0.36`. Ubuntu 22.04 apt ships an older `fzf`, so `scripts/install-fzf` installs a modern version to `~/.local/bin`.
 
 ### zsh compdump issues
 
 - Earlier, `compinit` tried writing `.zcompdump.*` in `$HOME` and hit permission issues.
-- We set `ZSH_COMPDUMP` in `zsh/.zshenv` and use `compinit -i` in `zsh/.zshrc`.
+- `ZSH_COMPDUMP` is set in `zsh/.zshenv`, and `compinit -i` is used in `zsh/.zshrc`.
 - If non-interactive `zsh -ic` appears to hang, test config with:
   - `zsh -c 'source ~/.zshrc; echo ok'`
 
@@ -84,10 +84,10 @@ consumers into runtime directories from separately configured authorities.
 - Powerline separators and many icons require a Nerd Font configured in Windows Terminal.
 - `scripts/powerline-test` is the fastest sanity check.
 
-### “I ran git status and it says no repo”
+### `git status` says the current directory is not a repository
 
-- This happened because the interactive session CWD was `/home/brianm/code/local/neovim` (not a git repo).
-- Use `cd ~/code/github.com/brianmulder/dotfiles` or `git -C ~/code/github.com/brianmulder/dotfiles …` when operating on the dotfiles repo.
+- This occurs when the interactive session CWD is outside the dotfiles repository.
+- Change to the repository root or use `git -C <path-to-dotfiles> …`.
 
 ### Approvals and autonomy
 
@@ -100,9 +100,9 @@ consumers into runtime directories from separately configured authorities.
 ## Safety / editing guidance
 
 - Keep changes incremental; favor defaults and a small plugin set.
-- Document keymaps and “how to use it” in `README.md` for a rusty future me.
+- Document keymaps and usage in `README.md` for future reference.
 - ShellCheck doesn’t support zsh; lint `scripts/*` and `shell/*` instead of `.zshrc/.zshenv`.
-- Prefer adding/adjusting small “doctor” checks when we learn a new failure mode (PATH shadowing, tool version minimums, fonts).
+- Prefer adding or adjusting small “doctor” checks when a new failure mode is discovered (PATH shadowing, tool version minimums, fonts).
 - For any non-trivial change, run the relevant doctor script before and after (`./scripts/dotfiles-doctor` on WSL, `.\scripts\dotfiles-doctor-windows.ps1` on native Windows), and update the doctor/docs when a new gotcha is discovered.
 
 ## Guardrails (avoid “hack cliff”)
@@ -112,6 +112,6 @@ When troubleshooting slowness or weird behavior, keep these principles:
 - **Consistency / least surprise:** avoid “special modes” (e.g. skipping `compinit`/Starship) for common entrypoints like tmux popups; the same action should behave the same everywhere.
 - **Root-cause over symptoms:** don’t paper over slowness with flags; first prove what’s slow and why (PATH, shims, filesystem, plugin, etc.).
 - **Single source of truth:** don’t fork behavior between tmux bindings and shell config; dotfiles should define one canonical experience.
-- **Low cognitive load:** avoid adding toggles/branching unless they’re truly permanent; they create future debugging and “which mode am I in?” friction.
+- **Low cognitive load:** avoid adding toggles/branching unless they’re truly permanent; they create future debugging and “which mode is active?” friction.
 - **Reproducibility first:** lock down measurement conditions before acting (cold/warm cache, consistent env, no tmux-server PATH drift).
 - **WSL/tmux environment footguns:** tmux popups run under tmux server env (often different PATH + hashed commands); always verify resolution with `command -v <thing>` / `type -a <thing>` when behavior differs.
