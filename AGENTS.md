@@ -96,6 +96,14 @@ consumers into runtime directories from separately configured authorities.
   - pins the working dir to this repo, and
   - uses `--ask-for-approval never` with `--sandbox workspace-write` plus `--add-dir "$HOME"` so `stow` and installers can operate.
 
+### Delivery workflow
+
+- Pull requests are disabled. Validate changes, commit intentionally, and push
+  directly to `main`.
+- Use a clean worktree when unrelated local changes are present.
+- Treat a push-protection block as a stop condition. Inspect and remove or rotate
+  the detected secret; do not bypass the block without explicit authorization.
+
 ## Safety / editing guidance
 
 - Keep changes incremental; favor defaults and a small plugin set.
