@@ -300,7 +300,3 @@ hash -r
 airlock-build
 airlock-doctor
 ```
-
-## macOS / legacy
-
-Old “flat file” dotfiles live in `legacy/` as historical reference.

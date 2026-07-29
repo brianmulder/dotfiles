@@ -22,7 +22,6 @@ Each top-level folder is a Stow package whose contents mirror `$HOME`:
 - `powershell/`: native Windows PowerShell profile (`~/Documents/PowerShell/*`)
 - `agent-skills/`: public skill-management command
 - `vim/`: legacy Vim config (`~/.vimrc`)
-- `legacy/`: historical macOS-era flat dotfiles (reference only)
 - `scripts/`: local bootstrap scripts (e.g. `scripts/install-nvim`)
 
 ## Bootstrapping (new machine)
