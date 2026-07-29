@@ -2,7 +2,7 @@
 set -euo pipefail
 
 printf "Powerline / Nerd Font glyph check\n"
-printf "If you see boxes/squares, set a Nerd Font in Windows Terminal.\n\n"
+printf "Boxes/squares indicate that Windows Terminal needs a Nerd Font.\n\n"
 
 printf "Separators:    \n"
 printf "Icons:  󰈙 󰊢 󰋙  \n\n"

@@ -1,8 +1,8 @@
 # Dotfiles (WSL-first, Windows-friendly)
 
-This repo is the single source of truth for my WSL dotfiles (Neovim, tmux, shell, git), with a small additive native Windows layer for PowerShell, Git, Neovim, and Starship.
+This repository is the canonical source for WSL dotfiles (Neovim, tmux, shell, git), with a small additive native Windows layer for PowerShell, Git, Neovim, and Starship.
 
-The repo is organized into Stow packages (each folder contains files laid out as they should appear in `$HOME`). Native Windows support is intentionally narrower: use the PowerShell/bootstrap scripts rather than trying to Stow your whole Windows home directory.
+The repository is organized into Stow packages (each folder contains files laid out as they should appear in `$HOME`). Native Windows support is intentionally narrower: use the PowerShell/bootstrap scripts rather than trying to Stow the entire Windows home directory.
 
 ## TL;DR (fresh WSL machine)
 
@@ -27,7 +27,7 @@ pwsh
 .\scripts\dotfiles-doctor-windows.ps1
 ```
 
-The Windows bootstrap is intentionally narrow. It links only the PowerShell profile package, Git config, Neovim config, and Starship config; it does not try to manage your whole Windows home or rewrite PATH for you.
+The Windows bootstrap is intentionally narrow. It links only the PowerShell profile package, Git config, Neovim config, and Starship config; it does not try to manage the entire Windows home or rewrite PATH.
 
 ## WSL setup
 
@@ -72,7 +72,7 @@ Managed links:
 
 Notes:
 - Use `-WhatIf` to preview changes.
-- If a destination already exists, the script warns and skips it unless you rerun with `-Force`.
+- If a destination already exists, the script warns and skips it unless rerun with `-Force`.
 - Restart PowerShell, Windows Terminal, VS Code terminals, and other long-lived apps after PATH changes or new installs.
 
 ## Apply (WSL / GNU Stow)
@@ -90,7 +90,7 @@ Notes:
   - `~/.gitconfig.local` (identity/credentials)
   - `~/.config/shell/env.local.sh` (secrets like tokens/API keys)
 
-## What you get (quick tour)
+## Included configuration (quick tour)
 
 - Shell aliases/helpers shared across bash/zsh: `shell/.config/shell/*`
 - PowerShell profile + helpers on native Windows: `powershell/Documents/PowerShell/*`
@@ -114,7 +114,7 @@ Useful aliases from `git/.gitconfig`:
 - `git cane` (amend, keep message)
 - `git pf` (force-with-lease)
 - `git po` (push current branch + set upstream)
-- `git aliases` (list your git aliases)
+- `git aliases` (list configured Git aliases)
 
 Behavior tweaks (intentionally boring/safe):
 - `git fetch` prunes deleted branches/tags
@@ -124,14 +124,14 @@ Credentials stay machine-local in `~/.gitconfig.local`. See `git/.gitconfig.loca
 
 ## Powerline (zsh + tmux + Neovim)
 
-To get “powerline” separators/icons, you need a Nerd Font in Windows Terminal.
+“Powerline” separators and icons require a Nerd Font in Windows Terminal.
 
 1) Install a Nerd Font on Windows (recommended: `JetBrainsMono Nerd Font`).
 2) Windows Terminal -> Settings -> Profiles -> Defaults -> Appearance -> Font face -> pick that Nerd Font.
 3) Verify glyphs render (should not show squares): `bash ./scripts/powerline-test`
 
 This repo uses:
-- zsh: `starship` prompt (optional). Install: `bash ./scripts/install-starship` then restart your shell.
+- zsh: `starship` prompt (optional). Install: `bash ./scripts/install-starship` then restart the shell.
 - PowerShell: the profile will initialize `starship` if it is installed and `~/.config/starship.toml` is linked.
 - tmux: a Solarized-ish powerline statusline in `tmux/.config/tmux/tmux.conf`
 - Neovim: `lualine.nvim` statusline (installed via `lazy.nvim`)
@@ -156,7 +156,7 @@ Core pane/window commands (defaults):
 - Split horizontally (top/bottom): `Ctrl-b` then `"`
 - Close current pane: `Ctrl-b` then `x`
 - Move between panes (vim keys): `Ctrl-b` then `h/j/k/l`
-- Move between panes (no prefix): `Alt-h/j/k/l` (if your terminal passes Alt)
+- Move between panes (no prefix): `Alt-h/j/k/l` (if the terminal passes Alt)
 - New window: `Ctrl-b` then `c`
 - Popup shell: `Ctrl-b` then `P`
 - Next/prev window: `Ctrl-b` then `n` / `p`
@@ -193,7 +193,7 @@ On a new machine, make sure submodules are checked out:
 cd ~/code/github.com/brianmulder/dotfiles
 git submodule update --init --recursive
 ```
-Tip: if you’re cloning fresh, `git clone --recurse-submodules …` avoids this step.
+For a fresh clone, `git clone --recurse-submodules …` avoids this step.
 Then inside tmux: `Ctrl-b` then `I` (capital i) to install plugins.
 
 Note: tmux plugins installed by TPM live in `~/.tmux/plugins` (outside Stow) and are not committed to this repo.
@@ -234,7 +234,7 @@ This repo intentionally uses Neovim's built-in spellcheck for prose, not an exte
 
 ### Terminal buffers (Codex, shell, etc.)
 
-Codex can already read/edit this repo from your terminal, so this Neovim config intentionally does *not* ship an “AI plugin” wrapper.
+Codex can already read and edit this repository directly from a terminal, so this Neovim config intentionally does *not* ship an “AI plugin” wrapper.
 
 Still, it’s handy to run Codex *inside* Neovim sometimes:
 
@@ -244,7 +244,7 @@ Still, it’s handy to run Codex *inside* Neovim sometimes:
   - `:vsplit | terminal codex`
 - Prefer a “floater” outside Neovim? Use tmux’s popup:
   - `Ctrl-b` then `P`, then run `codex`
-- If `Ctrl-w` navigation/resizing doesn’t work, you’re probably in terminal input mode:
+- If `Ctrl-w` navigation or resizing does not work, the terminal is probably in input mode:
   - Exit terminal input -> Normal mode: `Ctrl-\\ Ctrl-n`
   - Back into terminal input: `i`
 - Resize splits:
@@ -258,9 +258,9 @@ Still, it’s handy to run Codex *inside* Neovim sometimes:
 #### Mental model (buffers/windows/selection)
 
 - A *buffer* is the text (usually a file) in memory. A *window* is a pane that shows a buffer. Splits create more windows.
-- `:ls` shows your open buffers (`%` current, `#` alternate, `+` modified). Switch with `:b N`, `:bn`, `:bp`, or `Ctrl-^` (alternate).
+- `:ls` shows open buffers (`%` current, `#` alternate, `+` modified). Switch with `:b N`, `:bn`, `:bp`, or `Ctrl-^` (alternate).
 - Visual selection is a *mode*, not a saved object. Reselect the last selection with `gv`.
-- If you see “stuck highlight”: it’s often search highlighting; clear it with `:noh`. (If it’s Visual mode, `Esc` exits.)
+- A “stuck highlight” is often search highlighting; clear it with `:noh`. If it is Visual mode, `Esc` exits.
 
 ## Troubleshooting
 
@@ -273,7 +273,7 @@ Still, it’s handy to run Codex *inside* Neovim sometimes:
 - If resolution still looks wrong after changing PATH or installing a tool, restart PowerShell, Windows Terminal, VS Code terminals, and any other long-lived shell host.
 - `WindowsApps` can shadow real CLIs, including `codex`. The desired steady state is for `codex` to resolve from `%APPDATA%\npm\codex`.
 - Prefer `python -m pip ...` over bare `pip ...`.
-- Avoid `npm install -g npm` as the normal Windows upgrade path; upgrade Node/npm with your installer or version manager instead.
+- Avoid `npm install -g npm` as the normal Windows upgrade path; upgrade Node/npm with the configured installer or version manager instead.
 
 ## Dotfiles doctor
 

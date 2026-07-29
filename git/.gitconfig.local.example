@@ -4,10 +4,10 @@
 # This repo intentionally does not track that file (identity/credentials are personal).
 
 [user]
-	name = Your Name
-	email = you@example.com
+	name = Example Name
+	email = name@example.com
 
-# Optional: credentials (pick what you actually use)
+# Optional: credentials (choose an applicable method)
 #
 # Windows Git Credential Manager (recommended on native Windows)
 #[credential]

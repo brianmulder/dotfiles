@@ -174,8 +174,8 @@ check_symlink_into_repo "$HOME/.gitconfig" "$HOME/.gitconfig"
 check_symlink_into_repo "$HOME/.config/git" "$HOME/.config/git"
 check_symlink_into_repo "$HOME/.vimrc" "$HOME/.vimrc"
 
-# Codex wrapper scripts are intentionally not shipped anymore. If you previously stowed them,
-# you may have stale symlinks left behind.
+# Codex wrapper scripts are intentionally not shipped anymore. Previously
+# stowed wrappers may have left stale symlinks behind.
 for p in "$HOME/.local/bin/codex" "$HOME/.local/bin/codex-dotfiles"; do
   if [ -L "$p" ] && [ ! -e "$p" ]; then
     warn "stale symlink: $p (run: stow -R -t \"$HOME\" shell)"

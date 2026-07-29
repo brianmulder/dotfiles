@@ -1,7 +1,7 @@
 # Dotfiles-managed agent skills
 
 The public dotfiles repository owns the portable management mechanism. It does
-not declare which skills Brian uses. Desired subscriptions, private skills, and
+not declare which skills are used. Desired subscriptions, private skills, and
 host profiles live in independently configured private source repositories.
 
 The command requires Python 3.11 or newer, or Python 3.10 with `tomli`.

@@ -1,5 +1,5 @@
 # Minimal Starship prompt (powerline-ish, low cognitive load).
-# Requires a Nerd Font in your terminal for separators/icons to render.
+# Requires a Nerd Font in the terminal for separators/icons to render.
 
 add_newline = false
 
